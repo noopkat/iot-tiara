@@ -10,6 +10,8 @@
   "author": "Suz Hinton",
   "license": "MIT",
   "dependencies": {
+    "azure-iot-common": "^1.1.5",
+    "azure-iothub": "^1.1.7",
     "irc-framework": "^2.6.0"
   }
 }
