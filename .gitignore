@@ -37,3 +37,8 @@ jspm_packages
 .node_repl_history
 
 .env
+.pioenvs
+.piolibdeps
+lib
+.travis.yml
+platformio.ini
