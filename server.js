@@ -16,46 +16,57 @@ bot.on('registered', () => {
   const channel = bot.channel(process.env.TWITCH_CHANNEL);
   channel.join();
 
-  bot.matchMessage(/^led #[0-9A-F]{6}/i, (event) => {
+  bot.matchMessage(/^tiara #[0-9A-F]{6}/i, (event) => {
     const colourChoice = event.message.split('#')[1];
-    console.log(event.nick + 'turned the led hex colour: ' + colourChoice);
+    console.log(event.nick + 'turned the tiara hex colour: ' + colourChoice);
 
-    const buff = new Buffer(3);
-    console.log(buff);
-
-    buff[0] = parseInt(colourChoice.substr(0, 2), 16);
-    buff[1] = parseInt(colourChoice.substr(2, 2), 16);
-    buff[2] = parseInt(colourChoice.substr(4, 2), 16);
-
-    console.log(buff);
+    const buff = makeColourBuffer(colourChoice);
     sendToDevice(buff);
   });
 
   bot.matchMessage(/^tiara red$/i, (event) => {
     console.log(event.nick + ' turned the tiara red!');
-    sendToDevice(1);
+    const buff = makeColourBuffer('ff0000');
+    sendToDevice(buff);
   });
   bot.matchMessage(/^tiara green$/i, (event) => {
     console.log(event.nick + ' turned the tiara green!');
-    sendToDevice(2);
+    const buff = makeColourBuffer('00ff00');
+    sendToDevice(buff);
   });
   bot.matchMessage(/^tiara blue$/i, (event) => {
     console.log(event.nick + ' turned the tiara blue!');
-    sendToDevice(3);
+    const buff = makeColourBuffer('0000ff');
+    sendToDevice(buff);
   });
   bot.matchMessage(/^tiara purple$/i, (event) => {
     console.log(event.nick + ' turned the tiara purple!');
-    sendToDevice(4);
+    const buff = makeColourBuffer('8D00AD');
+    sendToDevice(buff);
   });
   bot.matchMessage(/^tiara on$/i, (event) => {
     console.log(event.nick + ' turned the tiara on!');
-    sendToDevice(5);
+    const buff = makeColourBuffer('ffffff');
+    sendToDevice(buff);
   });
   bot.matchMessage(/^tiara off$/i, (event) => {
     console.log(event.nick + ' turned the tiara off!');
-    sendToDevice(6);
+    const buff = makeColourBuffer('000000');
+    sendToDevice(buff);
   });
 });
+
+function makeColourBuffer(hex) {
+  const buff = new Buffer(3);
+  console.log(buff);
+
+  buff[0] = parseInt(hex.substr(0, 2), 16);
+  buff[1] = parseInt(hex.substr(2, 2), 16);
+  buff[2] = parseInt(hex.substr(4, 2), 16);
+
+  console.log(buff);
+  return buff;
+}
 
 function sendToDevice(msg) {
   const iotClient = IotClient.fromConnectionString(process.env.IOT_CONN_STRING);
