@@ -16,9 +16,9 @@ PubSubClient client(espClient);
 long lastMsg = 0;
 
 // set pins for RGB LED
-int redPin = 12;
+int redPin = 16;
 int greenPin = 14;
-int bluePin = 16;
+int bluePin = 12;
 
 // function to connect to the wifi
 void setup_wifi() {
@@ -48,7 +48,7 @@ void reconnect_mqtt() {
     Serial.print("Attempting MQTT connection...");
     // Attempt to connect
     if (client.connect(clientid, username, token)) {
-      Serial.println("connected");
+      Serial.println("connected"); 
       // ... and resubscribe
       client.subscribe(feed_endpoint);
     } else {
@@ -71,25 +71,12 @@ void callback(char* topic, byte* payload, unsigned int length) {
   }
   Serial.println();
 
-  // look at contents of message for choosing the colour shown
-  if ((char)payload[0] == '1') {
-    Serial.println("turning led red!");
-    setColour(255, 0, 0);
-  } else if ((char)payload[0] == '2') {
-    Serial.println("turning led green!");
-    setColour(0, 255, 0);
-  } else if ((char)payload[0] == '3') {
-    Serial.println("turning led blue!");
-    setColour(0, 0, 255);
-  } else if ((char)payload[0] == '4') {
-    Serial.println("turning led purple!");
-    setColour(141, 0, 173);
-  } else if ((char)payload[0] == '5') {
-    Serial.println("turning led on!");
-    setColour(255, 255, 255);
-  } else if ((char)payload[0] == '6') {
-    Serial.println("turning led off!");
-    setColour(0, 0, 0);
+  if (length == 3) {
+    int red = payload[0];
+    int green = payload[1];
+    int blue = payload[2];
+
+    setColour(red, green, blue);
   }
 }
 
