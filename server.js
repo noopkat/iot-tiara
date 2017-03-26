@@ -15,6 +15,8 @@ const colours = {
   off: '000000'
 };
 
+const colourRegEx = new RegExp('^tiara (#[0 - 9A- F]{6}|' + Object.keys(colours).join('|') + ')$', "i").compile();
+
 bot.connect({
     host: 'irc.chat.twitch.tv',
     port: 6667,
@@ -27,20 +29,17 @@ bot.on('registered', () => {
   const channel = bot.channel(process.env.TWITCH_CHANNEL);
   channel.join();
 
-  bot.matchMessage(/^tiara #[0-9A-F]{6}/i, (event) => {
-    const colourChoice = event.message.split('#')[1];
-    console.log(event.nick + 'turned the tiara hex colour: ' + colourChoice);
-
-    const buff = makeColourBuffer(colourChoice);
-    sendToDevice(buff);
-  });
-
-  bot.matchMessage(/^tiara (red|green|blue|purple|pink|orange|on|off)$/i, (event) => {
-    const colourChoice = event.message.split('tiara ')[1];
-    const hex = colours[colourChoice];
-    console.log(event.nick + ' turned the tiara hex colour: ' + hex);
-    const buff = makeColourBuffer(hex);
-    sendToDevice(buff);
+  bot.matchMessage(colourRegEx, (event) => {
+      var colourChoice = colourRegEx.exec(event.message)[1];
+      if (colourChoice.charAt(0) === '#') {
+          colourChoice = colourChoice.substr(1);
+      }
+      else {
+          colourChoice = colours[colourChoice];
+      }
+      console.log(event.nick + ' turned the tiara hex colour: ' + colourChoice);
+      const buff = makeColourBuffer(colourChoice);
+      sendToDevice(buff);
   });
 });
 
@@ -63,7 +62,7 @@ function sendToDevice(msg) {
     if (err) {
       console.error('Could not connect: ' + err.message);
     } else {
-      console.log('Client connected'); 
+      console.log('Client connected');
       // const data = JSON.stringify(msg);
       const message = new IotMessage(msg);
       console.log('Sending message: ' + message.getData());
