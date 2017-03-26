@@ -4,6 +4,17 @@ const IotMessage = require('azure-iot-common').Message;
 
 const bot = new IRC.Client();
 
+const colours = {
+  red: 'FF0000',
+  green: '00FF00',
+  blue: '0000FF',
+  purple: '8D00AD',
+  orange: 'FF2000',
+  pink: 'FF20B0',
+  on: 'FFFFFF',
+  off: '000000'
+};
+
 bot.connect({
     host: 'irc.chat.twitch.tv',
     port: 6667,
@@ -24,34 +35,11 @@ bot.on('registered', () => {
     sendToDevice(buff);
   });
 
-  bot.matchMessage(/^tiara red$/i, (event) => {
-    console.log(event.nick + ' turned the tiara red!');
-    const buff = makeColourBuffer('ff0000');
-    sendToDevice(buff);
-  });
-  bot.matchMessage(/^tiara green$/i, (event) => {
-    console.log(event.nick + ' turned the tiara green!');
-    const buff = makeColourBuffer('00ff00');
-    sendToDevice(buff);
-  });
-  bot.matchMessage(/^tiara blue$/i, (event) => {
-    console.log(event.nick + ' turned the tiara blue!');
-    const buff = makeColourBuffer('0000ff');
-    sendToDevice(buff);
-  });
-  bot.matchMessage(/^tiara purple$/i, (event) => {
-    console.log(event.nick + ' turned the tiara purple!');
-    const buff = makeColourBuffer('8D00AD');
-    sendToDevice(buff);
-  });
-  bot.matchMessage(/^tiara on$/i, (event) => {
-    console.log(event.nick + ' turned the tiara on!');
-    const buff = makeColourBuffer('ffffff');
-    sendToDevice(buff);
-  });
-  bot.matchMessage(/^tiara off$/i, (event) => {
-    console.log(event.nick + ' turned the tiara off!');
-    const buff = makeColourBuffer('000000');
+  bot.matchMessage(/^tiara (red|green|blue|purple|pink|orange|on|off)$/i, (event) => {
+    const colourChoice = event.message.split('tiara ')[1];
+    const hex = colours[colourChoice];
+    console.log(event.nick + ' turned the tiara hex colour: ' + hex);
+    const buff = makeColourBuffer(hex);
     sendToDevice(buff);
   });
 });
