@@ -15,27 +15,27 @@ bot.on('registered', () => {
   console.log('registered on twitch irc!');
   const channel = bot.channel(process.env.TWITCH_CHANNEL);
   channel.join();
-  bot.matchMessage(/^led red$/i, (event) => {
+  bot.matchMessage(/^tiara red$/i, (event) => {
     console.log(event.nick + ' turned the led red!');
     sendToDevice(1);
   });
-  bot.matchMessage(/^led green$/i, (event) => {
+  bot.matchMessage(/^tiara green$/i, (event) => {
     console.log(event.nick + ' turned the led green!');
     sendToDevice(2);
   });
-  bot.matchMessage(/^led blue$/i, (event) => {
+  bot.matchMessage(/^tiara blue$/i, (event) => {
     console.log(event.nick + ' turned the led blue!');
     sendToDevice(3);
   });
-  bot.matchMessage(/^led purple$/i, (event) => {
+  bot.matchMessage(/^tiara purple$/i, (event) => {
     console.log(event.nick + ' turned the led purple!');
     sendToDevice(4);
   });
-  bot.matchMessage(/^led on$/i, (event) => {
+  bot.matchMessage(/^tiara on$/i, (event) => {
     console.log(event.nick + ' turned the led on!');
     sendToDevice(5);
   });
-  bot.matchMessage(/^led off$/i, (event) => {
+  bot.matchMessage(/^tiara off$/i, (event) => {
     console.log(event.nick + ' turned the led off!');
     sendToDevice(6);
   });
