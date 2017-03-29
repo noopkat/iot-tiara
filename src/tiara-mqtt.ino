@@ -2,13 +2,28 @@
 #include <PubSubClient.h>
 #include <WiFiClientSecure.h>
 
+// wifi credentials
 const char* ssid = "";
 const char* password = "";
+
+// mqtt / azure iot hub credentials
+
+// example: <myiothub>.azure-devices.net
 const char* mqtt_server = "";
+
+// this is the id of the device created in Iot Hub
+// example: myCoolDevice
 const char* clientid = "";
+
+// <myiothub>.azure-devices.net/<myCoolDevice>
 const char* username = "";
+
+// SAS token should look like "SharedAccessSignature sr=<myiothub>.azure-devices.net%2Fdevices%2F<myCoolDevice>&sig=123&se=456"
 const char* token = "";
+
+// default topic feed for subscribing is "devices/<myCoolDevice>/messages/devicebound/#""
 const char* feed_endpoint = "";
+
 
 WiFiClientSecure espClient;
 PubSubClient client(espClient);
