@@ -12,6 +12,10 @@ Here is a dorky photo of yours truly wearing it:
 
 ![dork](http://i.imgur.com/9HGyNHp.jpg)
 
+## Is there a demo?
+
+[There sure is!](https://youtu.be/mxmfkz-kXX0)
+
 
 ## How do I make one of my own?
 
