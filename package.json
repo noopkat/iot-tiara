@@ -12,6 +12,7 @@
   "dependencies": {
     "azure-iot-common": "^1.1.5",
     "azure-iothub": "^1.1.7",
+    "dotenv": "^4.0.0",
     "irc-framework": "^2.6.0"
   }
 }

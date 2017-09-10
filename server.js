@@ -1,3 +1,4 @@
+require('dotenv').config();
 const IRC = require('irc-framework');
 const IotClient = require('azure-iothub').Client;
 const IotMessage = require('azure-iot-common').Message;
