@@ -1,4 +1,3 @@
-process.env.PORT_NUM = 3000;
 require('dotenv').config();
 
 const IotClient = require('azure-iothub').Client;
