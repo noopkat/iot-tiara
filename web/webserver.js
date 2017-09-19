@@ -6,8 +6,6 @@ const fs = promisify('fs');
 const IotClient = require('azure-iothub').Client;
 const IotMessage = require('azure-iot-common').Message;
 
-const Mustache = require('mustache');
-
 const express = require('express');
 const bodyParser = require('body-parser');
 
@@ -18,25 +16,9 @@ app.use(bodyParser.urlencoded({
 }));
 app.use(bodyParser.json());
 
+app.use(express.static('public'));
+
 const colourRegEx = /^#([0-9A-F]{6})/g
-
-var template;
-var templateReadPromise = fs.readFile('index.html').then(function (contents) {
-    contents = contents.toString("utf-8");
-    template = contents;
-    Mustache.parse(template); // optional, speeds up future uses
-}).catch(function (error) {
-    console.log(error);
-});
-
-Promise.all([templateReadPromise]);
-
-app.get('/', function (req, res) {
-    var rendered = Mustache.render(template, {
-        name: "Luke"
-    });
-    res.send(rendered);
-});
 
 app.post('/colour', function (req, res) {
     console.log("Got some colour");
