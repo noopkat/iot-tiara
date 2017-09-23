@@ -18,7 +18,7 @@ app.use(bodyParser.json());
 
 app.use(express.static('public'));
 
-const colourRegEx = /^#([0-9A-F]{6})/g
+const colourRegEx = /^#([0-9A-Fa-f]{6})/g
 
 app.post('/colour', function (req, res) {
     console.log("Got some colour");
