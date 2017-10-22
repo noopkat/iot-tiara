@@ -16,7 +16,7 @@ const colours = {
   off: '000000'
 };
 
-const colourRegEx = new RegExp('^tiara (#[0 - 9A- F]{6}|' + Object.keys(colours).join('|') + ')$', "i").compile();
+const colourRegEx = new RegExp('^tiara (#[0-9A-F]{6}|' + Object.keys(colours).join('|') + ')$', "i").compile();
 
 bot.connect({
     host: 'irc.chat.twitch.tv',
@@ -31,7 +31,7 @@ bot.on('registered', () => {
   channel.join();
 
   bot.matchMessage(colourRegEx, (event) => {
-      var colourChoice = colourRegEx.exec(event.message)[1];
+      var colourChoice = event.message.split(' ')[1];
       if (colourChoice.charAt(0) === '#') {
           colourChoice = colourChoice.substr(1);
       }
